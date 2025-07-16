@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Template</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100">
+    <div class="flex flex-col h-screen">
+      <!-- Include Header -->
+      <div data-include="header.html"></div>
+
+      <div class="flex flex-1">
+        <!-- Include Left Menu -->
+        <aside class="w-1/6" data-include="left-menu.html"></aside>
+
+        <main class="flex-1 p-6">
+          <h2 class="text-xl font-bold mb-4">사업장</h2>
+          <div class="flex items-center justify-between mb-4">
+            <div class="flex items-center space-x-4">
+              <label class="flex items-center">
+                <input
+                  type="radio"
+                  name="sameAsCorp"
+                  value="yes"
+                  class="mr-2"
+                />
+                예
+              </label>
+              <label class="flex items-center">
+                <input
+                  type="radio"
+                  name="sameAsCorp"
+                  value="no"
+                  class="mr-2"
+                  checked
+                />
+                아니오
+              </label>
+              <!-- <p class="text-green-600">‘아니오’ 선택 시.</p> -->
+            </div>
+            <div class="flex space-x-4">
+              <button
+                class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+              >
+                추가
+              </button>
+              <button
+                class="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+              >
+                삭제
+              </button>
+            </div>
+          </div>
+
+          <table
+            class="table-auto w-full border-collapse border border-gray-300"
+          >
+            <thead>
+              <tr class="bg-blue-100">
+                <th class="border border-gray-300 px-4 py-2">순번</th>
+                <th class="border border-gray-300 px-4 py-2">사업장명 *</th>
+                <th class="border border-gray-300 px-4 py-2">
+                  사업장 정보 작성
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="border border-gray-300 px-4 py-2 text-center">1</td>
+                <td class="border border-gray-300 px-4 py-2 text-center">
+                  <input
+                    type="text"
+                    class="w-full bg-white-200 border border-gray-300 rounded px-2 py-1"
+                    placeholder="사업장명 작성"
+                  />
+                </td>
+                <td class="border border-gray-300 px-4 py-2 text-center">
+                  <button class="text-blue-500 hover:underline">
+                    <i class="fas fa-pencil-alt"></i>
+                  </button>
+                </td>
+              </tr>
+              <tr>
+                <td class="border border-gray-300 px-4 py-2 text-center">2</td>
+                <td class="border border-gray-300 px-4 py-2 text-center">
+                  <input
+                    type="text"
+                    class="w-full bg-white-200 border border-gray-300 rounded px-2 py-1"
+                    placeholder="사업장명 작성"
+                  />
+                </td>
+                <td class="border border-gray-300 px-4 py-2 text-center">
+                  <button class="text-red-500 hover:underline">
+                    <a href="addBizPlc.html">
+                      <i class="fas fa-pencil-alt"></i>
+                    </a>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </main>
+      </div>
+
+      <!-- Include Footer -->
+      <div data-include="footer.html"></div>
+    </div>
+  </body>
+</html>
+
+<script src="js/common.js"></script>

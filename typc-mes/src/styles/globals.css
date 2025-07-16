@@ -1,0 +1,167 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-rgb: 249, 250, 251;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background-color: rgb(var(--background-rgb));
+}
+
+@layer components {
+  .program-card {
+    @apply cursor-pointer rounded-lg bg-white p-6 shadow-lg transition-all duration-300 ease-in-out;
+  }
+
+  .program-card:hover {
+    @apply -translate-y-1 shadow-xl;
+  }
+
+  .nav-item {
+    @apply flex min-h-[44px] cursor-pointer items-center px-4 py-3;
+  }
+
+  .nav-item.active {
+    @apply border-l-4 border-blue-500 bg-blue-50;
+  }
+
+  .year-card {
+    @apply cursor-pointer rounded-lg bg-white p-6 shadow transition-all duration-200 ease-in-out;
+  }
+
+  .year-card:hover {
+    @apply scale-[1.05];
+  }
+
+  .year-card.selected {
+    @apply border-2 border-blue-500 bg-blue-50;
+  }
+
+  .tooltip {
+    @apply relative inline-block;
+  }
+
+  .tooltip .tooltip-text {
+    @apply invisible absolute left-1/2 top-full z-10 mt-1 w-32 -translate-x-1/2 rounded-md bg-gray-600 px-3 py-2 text-center text-white opacity-0 transition-opacity duration-300;
+  }
+
+  .tooltip:hover .tooltip-text {
+    @apply visible opacity-100;
+  }
+
+  .tooltip-container {
+    @apply relative inline-flex;
+  }
+
+  .tooltip-sidebar {
+    @apply invisible absolute left-full z-10 ml-2 whitespace-nowrap rounded-md bg-gray-600 px-3 py-2 text-center text-white opacity-0 transition-opacity duration-300;
+  }
+
+  .tooltip-container:hover .tooltip-sidebar {
+    @apply visible opacity-100;
+  }
+}
+
+/* 터치 최적화 */
+.touch-target {
+  @apply min-h-[44px] min-w-[44px];
+}
+
+/* 공정 흐름도 애니메이션 */
+.process-flow-enter {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.process-flow-enter-active {
+  opacity: 1;
+  transform: translateX(0);
+  transition:
+    opacity 300ms,
+    transform 300ms;
+}
+
+.process-flow-exit {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.process-flow-exit-active {
+  opacity: 0;
+  transform: translateX(20px);
+  transition:
+    opacity 300ms,
+    transform 300ms;
+}
+
+/* 추천 단위공정 강조 */
+.recommended-unit-process {
+  @apply relative;
+}
+
+.recommended-unit-process::before {
+  content: '';
+  @apply absolute -inset-0.5 rounded-lg bg-gradient-to-r from-yellow-400 to-orange-400 opacity-30 blur;
+}
+
+.recommended-unit-process > * {
+  @apply relative;
+}
+
+/* 순서 배지 애니메이션 */
+.order-badge {
+  @apply transform transition-transform duration-200;
+}
+
+.order-badge:hover {
+  @apply scale-110;
+}
+
+/* 모바일 최적화 */
+@media (max-width: 768px) {
+  .mobile-scroll-container {
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+  .mobile-scroll-container::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* 접근성 개선 */
+.focus-visible {
+  @apply outline-none ring-2 ring-indigo-500 ring-opacity-50;
+}
+
+/* 높은 대비 모드 대응 */
+@media (prefers-contrast: high) {
+  .border-gray-300 {
+    @apply border-gray-600;
+  }
+
+  .text-gray-500 {
+    @apply text-gray-700;
+  }
+
+  .bg-gray-50 {
+    @apply bg-gray-100;
+  }
+}
+
+/* 감소된 모션 대응 */
+@media (prefers-reduced-motion: reduce) {
+  .process-flow-enter-active,
+  .process-flow-exit-active {
+    transition: none;
+  }
+
+  .order-badge {
+    @apply transition-none;
+  }
+}

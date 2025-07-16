@@ -1,0 +1,348 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3View 탄소관리 종합 솔루션</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .program-card {
+            transition: all 0.3s ease;
+        }
+        .program-card:hover {
+            transform: translateY(-5px);
+        }
+        .nav-item.active {
+            border-left: 4px solid #3B82F6;
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        .year-card {
+            transition: all 0.2s ease;
+        }
+        .year-card:hover {
+            transform: scale(1.05);
+        }
+        .year-card.selected {
+            border: 2px solid #3B82F6;
+            background-color: rgba(59, 130, 246, 0.1);
+        }
+        
+        button, .card, .nav-item, .year-card {
+            min-height: 44px;
+        }
+        
+        .tooltip {
+            position: relative;
+            display: inline-block;
+        }
+        .tooltip .tooltip-text {
+            visibility: hidden;
+            width: 200px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -100px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .tooltip:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div id="app">
+        <!-- 프로그램 선택 화면 -->
+        <div id="program-selection-screen" class="container mx-auto px-4 py-8">
+            <div class="text-center mb-12">
+                <h1 class="text-5xl font-extrabold text-gray-800 mb-6">3View 탄소관리 종합 솔루션</h1>
+                <p class="text-2xl font-bold text-gray-600">사용하고자 하는 프로그램을 선택해 주세요.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-4xl mx-auto">
+                <!-- 프로그램 카드 1 -->
+                <div class="program-card bg-white rounded-lg shadow-lg p-6 cursor-pointer" onclick="selectProgram('공통기준정보')">
+                    <div class="flex items-center justify-center h-24 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-semibold text-center mb-2">공통기준정보</h2>
+                    <p class="text-gray-600 text-center text-sm">조직 및 사업장 정보 관리</p>
+                </div>
+                
+                <!-- 프로그램 카드 2 -->
+                <div class="program-card bg-white rounded-lg shadow-lg p-6 cursor-pointer" onclick="selectProgram('OCF')">
+                    <div class="flex items-center justify-center h-24 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-purple-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-semibold text-center mb-2">OCF</h2>
+                    <p class="text-gray-600 text-center text-sm">조직 탄소발자국 관리</p>
+                </div>
+                
+                <!-- 프로그램 카드 3 -->
+                <div class="program-card bg-white rounded-lg shadow-lg p-6 cursor-pointer" onclick="selectProgram('PCF')">
+                    <div class="flex items-center justify-center h-24 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-teal-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4" />
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-semibold text-center mb-2">PCF</h2>
+                    <p class="text-gray-600 text-center text-sm">제품 탄소발자국 관리</p>
+                </div>
+                
+                <!-- 프로그램 카드 4 -->
+                <div class="program-card bg-white rounded-lg shadow-lg p-6 cursor-pointer" onclick="selectProgram('CBAM')">
+                    <div class="flex items-center justify-center h-24 mb-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-orange-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3" />
+                        </svg>
+                    </div>
+                    <h2 class="text-xl font-semibold text-center mb-2">CBAM</h2>
+                    <p class="text-gray-600 text-center text-sm">EU 탄소국경조정제도 관리</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 메인 화면 (초기에는 숨김) -->
+        <div id="main-screen" class="hidden">
+            <!-- 헤더 -->
+            <header class="bg-white shadow">
+                <div class="container mx-auto px-4">
+                    <div class="flex justify-between items-center py-4">
+                        <div class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 mr-4 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                            </svg>
+                            <h1 class="text-xl font-bold text-gray-800">3View 탄소관리 종합 솔루션</h1>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <span id="selected-program" class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">공통기준정보</span>
+                            <span id="selected-year" class="hidden px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">2023</span>
+                            <div class="tooltip">
+                                <button class="p-2 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                </button>
+                                <span class="tooltip-text">도움말</span>
+                            </div>
+                            <div class="tooltip">
+                                <button class="p-2 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                </button>
+                                <span class="tooltip-text">설정</span>
+                            </div>
+                            <div class="tooltip">
+                                <button class="p-2 rounded-full bg-gray-200 hover:bg-gray-300 focus:outline-none">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                                    </svg>
+                                </button>
+                                <span class="tooltip-text">로그아웃</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- 메인 컨텐츠 영역 -->
+            <div class="flex h-screen">
+                <!-- 사이드바 -->
+                <aside class="w-64 bg-white shadow-md p-4 h-full border-r border-gray-300">
+                    <h2 class="text-xl font-bold mb-4">메뉴</h2>
+                    <ul class="space-y-2">
+                        <li class="nav-item active px-4 py-3 cursor-pointer text-blue-500 hover:underline" onclick="showContent('year-selection')">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                <span class="text-xl">조직 정보</span>
+                            </div>
+                        </li>
+                        <li class="nav-item px-4 py-3 cursor-pointer text-gray-500 hover:underline" onclick="showContent('site-info')">
+                            <div class="flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-3 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                <span class="text-xl">사업장 정보</span>
+                            </div>
+                        </li>
+                    </ul>
+                </aside>
+
+                <!-- 컨텐츠 영역 -->
+                <main class="flex-1 p-6 bg-gray-100 overflow-auto">
+                    <!-- 연도 선택 화면 -->
+                    <div id="year-selection" class="content-section">
+                        <div class="mb-6">
+                            <h2 class="text-2xl font-bold text-gray-800 mb-2">공통기준 정보</h2>
+                            <p class="text-gray-600">연도를 선택하여 데이터를 관리합니다.</p>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            <!-- 2023년 카드 -->
+                            <div class="year-card bg-white rounded-lg shadow p-6 cursor-pointer" onclick="selectYear('2023')">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-xl font-semibold text-gray-800">2023</h3>
+                                    <div class="bg-gray-200 rounded-full h-6 w-6 flex items-center justify-center year-indicator" id="year-2023">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-600 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <p class="text-gray-500 mt-2 text-sm">2023년 데이터 관리</p>
+                            </div>
+                            
+                            <!-- 2024년 카드 -->
+                            <div class="year-card bg-white rounded-lg shadow p-6 cursor-pointer" onclick="selectYear('2024')">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-xl font-semibold text-gray-800">2024</h3>
+                                    <div class="bg-gray-200 rounded-full h-6 w-6 flex items-center justify-center year-indicator" id="year-2024">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-600 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <p class="text-gray-500 mt-2 text-sm">2024년 데이터 관리</p>
+                            </div>
+                            
+                            <!-- 2025년 카드 -->
+                            <div class="year-card bg-white rounded-lg shadow p-6 cursor-pointer" onclick="selectYear('2025')">
+                                <div class="flex items-center justify-between">
+                                    <h3 class="text-xl font-semibold text-gray-800">2025</h3>
+                                    <div class="bg-gray-200 rounded-full h-6 w-6 flex items-center justify-center year-indicator" id="year-2025">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-600 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <p class="text-gray-500 mt-2 text-sm">2025년 데이터 관리</p>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <h3 class="text-lg font-semibold text-gray-800 mb-4">데이터 불러오기</h3>
+                            <div class="bg-white rounded-lg shadow p-6">
+                                <p class="text-gray-600 mb-4">다른 연도 데이터를 그대로 불러올 수 있습니다.</p>
+                                
+                                <div class="flex items-center space-x-4">
+                                    <select id="import-year" class="block w-full max-w-xs px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                                        <option value="">연도 선택</option>
+                                        <option value="2023">2023</option>
+                                        <option value="2024">2024</option>
+                                        <option value="2025">2025</option>
+                                    </select>
+                                    
+                                    <button class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                        불러오기
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 사업장정보 화면 (초기에는 숨김) -->
+                    <div id="site-info" class="content-section hidden">
+                        <h2 class="text-2xl font-bold text-gray-800 mb-4">사업장정보</h2>
+                        <p class="text-gray-600">사업장 관련 정보를 입력해주세요.</p>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 프로그램 선택 함수
+        function selectProgram(program) {
+            document.getElementById('program-selection-screen').classList.add('hidden');
+            document.getElementById('main-screen').classList.remove('hidden');
+            document.getElementById('selected-program').textContent = program;
+            
+            // 프로그램별 색상 설정
+            const badge = document.getElementById('selected-program');
+            switch(program) {
+                case '공통기준정보':
+                    badge.className = 'px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium';
+                    break;
+                case 'OCF':
+                    badge.className = 'px-3 py-1 bg-purple-100 text-purple-800 rounded-full text-sm font-medium';
+                    break;
+                case 'PCF':
+                    badge.className = 'px-3 py-1 bg-teal-100 text-teal-800 rounded-full text-sm font-medium';
+                    break;
+                case 'CBAM':
+                    badge.className = 'px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm font-medium';
+                    break;
+            }
+        }
+        
+        // 연도 선택 함수
+        function selectYear(year) {
+            // 이전에 선택된 연도 클래스 제거
+            document.querySelectorAll('.year-card').forEach(card => {
+                card.classList.remove('selected');
+            });
+            
+            // 이전에 선택된 인디케이터 숨기기
+            document.querySelectorAll('.year-indicator svg').forEach(svg => {
+                svg.classList.add('hidden');
+            });
+            
+            // 선택된 연도 표시
+            document.querySelector(`.year-card:nth-child(${year - 2022})`).classList.add('selected');
+            document.querySelector(`#year-${year} svg`).classList.remove('hidden');
+            
+            // 헤더에 선택된 연도 표시
+            const yearBadge = document.getElementById('selected-year');
+            yearBadge.textContent = year;
+            yearBadge.classList.remove('hidden');
+        }
+        
+        // 컨텐츠 전환 함수
+        function showContent(contentId) {
+            // 모든 네비게이션 아이템 비활성화
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                item.classList.remove('text-blue-500');
+                item.classList.add('text-gray-500');
+            });
+            
+            // 선택된 네비게이션 아이템 활성화
+            const navItem = document.querySelector(`.nav-item[onclick="showContent('${contentId}')"]`);
+            navItem.classList.add('active');
+            navItem.classList.remove('text-gray-500');
+            navItem.classList.add('text-blue-500');
+            
+            // 선택된 네비게이션 아이템의 아이콘 색상 변경
+            document.querySelectorAll('.nav-item svg').forEach(svg => {
+                svg.classList.remove('text-blue-500');
+                svg.classList.add('text-gray-500');
+            });
+            navItem.querySelector('svg').classList.remove('text-gray-500');
+            navItem.querySelector('svg').classList.add('text-blue-500');
+            
+            // 모든 컨텐츠 섹션 숨기기
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // 선택된 컨텐츠 섹션 표시
+            document.getElementById(contentId).classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

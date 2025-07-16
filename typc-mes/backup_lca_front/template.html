@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Template</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100">
+    <div class="flex flex-col h-screen">
+      <!-- Include Header -->
+      <div data-include="header.html"></div>
+
+      <div class="flex flex-1">
+        <!-- Include Left Menu -->
+        <aside class="w-1/6" data-include="left-menu.html"></aside>
+
+        <main class="flex-1 p-6">
+          <h2 class="text-xl font-bold mb-4">콘텐츠 영역</h2>
+          <p class="text-gray-700">여기에 콘텐츠를 추가하세요.</p>
+        </main>
+      </div>
+
+      <!-- Include Footer -->
+      <div data-include="footer.html"></div>
+    </div>
+  </body>
+</html>
+
+<script src="js/common.js"></script>

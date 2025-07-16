@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Template</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-100">
+    <div class="flex flex-col h-screen">
+      <!-- Include Header -->
+      <div data-include="header.html"></div>
+
+      <div class="flex flex-1">
+        <!-- Include Left Menu -->
+        <aside class="w-1/6" data-include="left-menu.html"></aside>
+
+        <main class="flex-1 p-6">
+          <h2 class="text-xl font-bold mb-4">법인 정보 입력</h2>
+          <form class="space-y-4 bg-white p-6 rounded shadow">
+            <fieldset class="border border-gray-300 p-4 rounded-md">
+              <legend class="text-sm font-medium text-gray-700 px-2">
+                법인
+              </legend>
+              <!-- 법인명 -->
+              <div>
+                <label
+                  for="corpName"
+                  class="block text-sm font-medium text-gray-700"
+                  >법인명 *</label
+                >
+                <input
+                  type="text"
+                  id="corpName"
+                  name="corpName"
+                  class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                  placeholder="법인명"
+                />
+              </div>
+              <!-- 대표자 -->
+              <div>
+                <label for="ceo" class="block text-sm font-medium text-gray-700"
+                  >대표자</label
+                >
+                <input
+                  type="text"
+                  id="ceo"
+                  name="ceo"
+                  class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                />
+              </div>
+              <!-- 법인등록번호 -->
+              <div>
+                <label
+                  for="biz-no"
+                  class="block text-sm font-medium text-gray-700"
+                  >법인등록번호</label
+                >
+                <input
+                  type="text"
+                  id="biz-no"
+                  name="biz-no"
+                  class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                />
+              </div>
+              <!-- 지정업종 & 구분 -->
+              <div class="flex space-x-4">
+                <!-- 지정업종 -->
+                <div class="flex-1">
+                  <label
+                    for="industry"
+                    class="block text-sm font-medium text-gray-700"
+                    >지정업종</label
+                  >
+                  <select
+                    id="industry"
+                    name="industry"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                  >
+                    <option value="">선택</option>
+                    <option value="업종1">업종1</option>
+                    <option value="업종2">업종2</option>
+                    <option value="업종3">업종3</option>
+                  </select>
+                </div>
+                <!-- 구분 -->
+                <div class="flex-1">
+                  <label
+                    for="category"
+                    class="block text-sm font-medium text-gray-700"
+                    >구분</label
+                  >
+                  <select
+                    id="category"
+                    name="category"
+                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                  >
+                    <option value="">선택</option>
+                    <option value="구분1">구분1</option>
+                    <option value="구분2">구분2</option>
+                    <option value="구분3">구분3</option>
+                  </select>
+                </div>
+              </div>
+              <!-- 공정배출유무 -->
+              <div>
+                <label
+                  for="processEmission"
+                  class="block text-sm font-medium text-gray-700"
+                  style="margin-top: 1em"
+                  >공정배출유무</label
+                >
+                <p class="text-sm text-gray-500 mt-1">
+                  여러 항목을 선택하려면 Ctrl (Windows) 또는 Command (Mac)을
+                  누른 상태로 클릭하세요.
+                </p>
+                <select
+                  id="processEmission"
+                  name="processEmission"
+                  class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                  multiple
+                >
+                  <option value="시멘트생산">시멘트생산</option>
+                  <option value="석회생산">석회생산</option>
+                  <option value="탄산염 사용공정">탄산염 사용공정</option>
+                  <option value="유리생산">유리생산</option>
+                  <option value="마그네슘생산">마그네슘생산</option>
+                  <option value="인산생산(비료)">인산생산(비료)</option>
+                  <option value="석유정제">석유정제</option>
+                  <option value="암모니아생산">암모니아생산</option>
+                  <option value="질산생산">질산생산</option>
+                  <option value="아프디산생산">아프디산생산</option>
+                  <option value="카바이드생산">카바이드생산</option>
+                  <option value="소다회생산(Na₂CO₃)">소다회생산(Na₂CO₃)</option>
+                  <option value="석유화학제품생산">석유화학제품생산</option>
+                  <option value="기업입력">기업입력</option>
+                  <option value="불소화합물(HFC, PFC, SF6)생산">
+                    불소화합물(HFC, PFC, SF6)생산
+                  </option>
+                  <option value="목록화">목록화</option>
+                  <option value="카프로락탐생산">카프로락탐생산</option>
+                  <option value="철강(코크스로, 소결로, 석회소성로) 생산">
+                    철강(코크스로, 소결로, 석회소성로) 생산
+                  </option>
+                  <option value="자동표출 또는 계산">자동표출 또는 계산</option>
+                  <option value="합금철생산">합금철생산</option>
+                  <option value="아연생산">아연생산</option>
+                  <option value="납생산">납생산</option>
+                  <option value="전자산업">전자산업</option>
+                  <option value="연료전지">연료전지</option>
+                </select>
+              </div>
+              <!-- 법인 소재지 -->
+              <div>
+                <label
+                  for="corpAddress"
+                  class="block text-sm font-medium text-gray-700"
+                  >법인 소재지 *</label
+                >
+                <input
+                  type="text"
+                  id="corpAddress"
+                  name="corpAddress"
+                  class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                  placeholder="본사 주소"
+                />
+              </div>
+              <!-- 법인 전화번호 -->
+              <div>
+                <label
+                  for="corpPhone"
+                  class="block text-sm font-medium text-gray-700"
+                  >법인 전화번호</label
+                >
+                <input
+                  type="text"
+                  id="corpPhone"
+                  name="corpPhone"
+                  class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                  placeholder="본사 대표번호"
+                />
+              </div>
+            </fieldset>
+            <!-- 법인 담당자 정보 -->
+            <fieldset class="border border-gray-300 p-4 rounded-md">
+              <legend class="text-sm font-medium text-gray-700 px-2">
+                법인 담당자 정보
+              </legend>
+
+              <!-- 법인 담당자 성명 -->
+              <div>
+                <label
+                  for="corpManager"
+                  class="block text-sm font-medium text-gray-700"
+                  >법인 담당자 성명 *</label
+                >
+                <input
+                  type="text"
+                  id="corpManager"
+                  name="corpManager"
+                  class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                  placeholder="담당자 이름"
+                />
+                <p class="text-sm text-gray-500 mt-1">
+                  담당자 정보는 별도로 관리될 수 있음 (담당자가 여러 명일 수
+                  있음)
+                </p>
+              </div>
+
+              <!-- 부서 -->
+              <div class="mt-4">
+                <label
+                  for="department"
+                  class="block text-sm font-medium text-gray-700"
+                  >부서</label
+                >
+                <input
+                  type="text"
+                  id="department"
+                  name="department"
+                  class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                />
+              </div>
+
+              <!-- 직급 -->
+              <div>
+                <label
+                  for="position"
+                  class="block text-sm font-medium text-gray-700"
+                  >직급</label
+                >
+                <input
+                  type="text"
+                  id="position"
+                  name="position"
+                  class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                />
+              </div>
+
+              <!-- 전화 번호 -->
+              <div>
+                <label
+                  for="phone"
+                  class="block text-sm font-medium text-gray-700"
+                  >전화 번호</label
+                >
+                <input
+                  type="text"
+                  id="phone"
+                  name="phone"
+                  class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                />
+              </div>
+
+              <!-- 휴대폰 번호 -->
+              <div>
+                <label
+                  for="mobile"
+                  class="block text-sm font-medium text-gray-700"
+                  >휴대폰 번호</label
+                >
+                <input
+                  type="text"
+                  id="mobile"
+                  name="mobile"
+                  class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                />
+              </div>
+
+              <!-- 이메일 -->
+              <div>
+                <label
+                  for="email"
+                  class="block text-sm font-medium text-gray-700"
+                  >이메일</label
+                >
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  class="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                />
+              </div>
+            </fieldset>
+
+            <!-- Submit Button -->
+            <div>
+              <a
+                href="pop2ChooseBizPlc.html"
+                class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 block text-center"
+              >
+                저장
+              </a>
+              <!-- <button
+                type="submit"
+                class="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+              >
+                저장
+              </button> -->
+            </div>
+          </form>
+        </main>
+      </div>
+
+      <!-- Include Footer -->
+      <div data-include="footer.html"></div>
+    </div>
+  </body>
+</html>
+
+<script src="js/common.js"></script>
