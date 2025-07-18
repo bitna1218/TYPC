@@ -10,6 +10,7 @@ import StatusLegend from './test-components/List/test-StatusLegend';
 import ManagementHeader from './test-components/Assembly/test-ManagementHeader';
 import SelectedOrderSummary from './test-components/Assembly/test-SelectedOrderSummary';
 import AssemblyTimerSection from './test-components/Assembly/test-AssemblyTimerSection';
+import AssemblyProgressBar from './test-components/Assembly/test-AssemblyProgressBar';
 import AssemblyButton from './test-components/Assembly/test-AssemblyButton';
 import AssemblyProgressSection from './test-components/Assembly/test-AssemblyProgressSection';
 import PhotoUploadSection from './test-components/Assembly/test-PhotoUploadSection';
@@ -30,6 +31,7 @@ const RealtimeAssemblyView: React.FC = () => {
     const [showAddComponentModal, setShowAddComponentModal] = useState(false);
 
     const [currentView, setCurrentView] = useState('list');
+    const [timerState, setTimerState] = useState<'ready' | 'running' | 'paused' | 'completed'>('ready');
 
     const [selectedDate, setSelectedDate] = useState<string>(new Date().toISOString().split('T')[0]);
     const [assemblyData, setAssemblyData] = useState<AssemblyOrder[]>(initialAssemblyData); // 전체 주문 목록
@@ -55,10 +57,31 @@ const RealtimeAssemblyView: React.FC = () => {
         setEditOrder(null);     
     };
 
-    //order list 삭제제
+    //order list 삭제
     const handleDeleteOrder = (id: string) => {
         setAssemblyData(prev => prev.filter(order => order.id !== Number(id)));
     };
+
+    //조립 시작 버튼 클릭
+    const handleStart = () => {
+        setTimerState('running');
+    }
+
+    //조립 일시정지 버튼 클릭
+    const handlePause = () => {
+        setTimerState('paused');
+    }
+
+    //조립 재개 버튼 클릭
+    const handleResume = () => {
+        setTimerState('running');
+    }
+
+    //조립 완료 버튼 클릭
+    const handleComplete = () => {
+        alert(`🎉 조립이 완료되었습니다!\n\n주문번호: \n고객명: \n총 소요 시간: \n\n주문 목록으로 돌아갑니다.`);
+        setCurrentView('list')
+    }
 
 
     if (currentView === 'assembly') {
@@ -74,9 +97,21 @@ const RealtimeAssemblyView: React.FC = () => {
 
                 <div className="p-3">
                     <SelectedOrderSummary order={selectedOrder}/>
-                    <AssemblyTimerSection/>
+                    
+                    <AssemblyTimerSection 
+                    timerState={timerState} 
+                    handleStart={handleStart}
+                    handlePause={handlePause}
+                    handleResume={handleResume}
+                    handleComplete={handleComplete}
+                    />
+
+                    {timerState !== 'ready' && 
+                    <AssemblyProgressBar />
+                    }
+
                     <AssemblyButton onOpenAddComponentModal={() => setShowAddComponentModal(true)}/>
-                    <AssemblyProgressSection />
+                    <AssemblyProgressSection timerState={timerState} />
                     <PhotoUploadSection />
                 </div>
 

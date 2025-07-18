@@ -31,7 +31,7 @@ const AddComponentModal: React.FC<AddComponentModalProps> = ({onClose}) => {
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500"
             >
               {Object.keys(partsInventoryData).map((category) => (
-              <option value="">{category}</option>
+              <option key={category} value={category}>{category}</option>
               ))}
             </select>
           </div>
@@ -40,9 +40,21 @@ const AddComponentModal: React.FC<AddComponentModalProps> = ({onClose}) => {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">카테고리 2 (브랜드)</label>
             <select
+              value={selectedBrand}
+              onChange={(e) => {
+                setSelectedBrand(e.target.value);
+                setSelectedModel('');
+              }}
+              disabled={!selectedCategory}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
             >
               <option value="">브랜드 선택</option>
+              {selectedCategory &&
+              Object.keys(partsInventoryData[selectedCategory]).map((brand) => (
+                <option key={brand} value={brand}>
+                  {brand}
+                </option>
+              ))}
             </select>
           </div>
 
@@ -50,9 +62,19 @@ const AddComponentModal: React.FC<AddComponentModalProps> = ({onClose}) => {
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">카테고리 3 (세부 부품)</label>
             <select
+              value={selectedModel}
+              onChange={(e) => setSelectedModel(e.target.value)}
+              disabled={!selectedBrand}
               className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 disabled:bg-gray-100"
             >
               <option value="">세부 부품 선택</option>
+              {selectedCategory &&
+                selectedBrand &&
+                partsInventoryData[selectedCategory][selectedBrand].map((model)=>(
+                  <option key={model} value={model}>
+                    {model}
+                  </option>
+                ))}
             </select>
           </div>
 
